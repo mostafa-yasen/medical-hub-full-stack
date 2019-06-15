@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'MedicalHub.urls'
+LOGIN_URL = '/home/'
 
 TEMPLATES = [
     {

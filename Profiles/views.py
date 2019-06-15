@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
+from django.contrib.auth import logout
+from django.contrib.auth import login
 
 
 def loading(request):
@@ -10,7 +12,11 @@ def loading(request):
 def home(request):
     return render(request, 'landing.html')
 
-def login(request):
+def logout_view(request):
+    logout(request)
+    return redirect('/home/')
+
+def login_view(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
@@ -19,12 +25,18 @@ def login(request):
 
         if user is None:
             # User not authenticated
+            print('=' * 50)
             print('User not authenticated')
             return redirect('/')
 
-        return redirect('/home/')
+
+        login(request, user)
+        print('login successful')
+        return redirect('/communities/')
 
     return render(request, 'login.html')
+
+
 
 def register(request):
     if request.POST:

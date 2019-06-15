@@ -19,13 +19,16 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from Profiles import views as profile_views
+from Communities import views as communities_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', profile_views.loading, name='loading'),
     path('home/', profile_views.home, name='home'),
-    path('login/', profile_views.login, name='login'),
+    path('login/', profile_views.login_view, name='login'),
+    path('logout/', profile_views.logout_view, name='logout'),
     path('register/', profile_views.register, name='register'),
+    path('communities/', communities_views.communities, name='communities'),
 ]
 
 if settings.DEBUG:
