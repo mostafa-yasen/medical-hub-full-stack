@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/community.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Title -->
+<div class="container">
+    <div class="community-name row">
+        <div class="col-12">
+            <h2 class="text-center text-upper mt-3 mb-3 text-fadded">{{ community.name }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- Writeing New Post -->
+<div id="write-post" class="write-post">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-sm-12">
+                <form action="#">
+                    <div class="form-group">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <div class="form-group row no-gutters">
+                        <div class="col-md-9">
+                            <label for="" class="text-fadded-2">
+                                Write a new or even old Advice, Question, Status, Feeling, Activity .. any thing you
+                                want.
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger ml-auto d-block" style="width: 80%">Post</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <p class="text-fadded-1">
+                    {{ community.description }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Posts List -->
+<div class="posts-list" id="posts-list">
+    <div class="container">
+        <div class="row m-0">
+            <div class="col-md-8">
+                <!-- Post -->
+                <div class="card mb-3 post-card">
+                    <div class="container-fluid p-0">
+                        <div class="card-header p-3">
+                            <div class="row m-0">
+                                <div class="col-lg-1 col-md-2 col-sm-3 p-0">
+                                    <div class="img-container rounded-circle mr-auto ml-auto"
+                                        style="width: 50px; height: 50px;">
+                                        <img src="medical_hub/images/b.jpg" alt="Not Found">
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-md-8 col-sm-9 p-0 pl-2">
+                                    <h6 class="mb-0 pt-1"><a href="#" class="text-info">Mostafa Yasin</a></h6>
+                                    <span class="text-fadded text-md">22, june 2019</span>
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 pt-3" style="text-align: center">
+                                    <span class="text-danger">
+                                        25
+                                        <i class="fas fa-heart"></i>
+                                    </span>
+                                    <!-- <br> -->
+                                    <span class="text-secondary">
+                                        10
+                                        <i class="far fa-comment-alt"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero inventore recusandae
+                            temporibus eum provident molestias nostrum sint porro distinctio, aliquid cupiditate
+                            nobis ducimus quas nisi. Officia facilis dolore placeat repellendus.
+                        </div>
+
+                        <div class="card-footer p-0">
+                            <div class="row m-0">
+                                <div class="m-0 p-0 col-6 border-right text-center btn-like active">
+                                    <a class="text-danger pt-2 pb-2 d-block">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                </div>
+                                <div class="m-0 p-0 col-6 text-center">
+                                    <a href="#" class="text-secondary pt-2 pb-2 d-block">
+                                        <i class="far fa-comment-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="col-12 write-comment mt-3 " id="writeComment">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Write Comment"
+                                            aria-label="Write Comment" aria-describedby="btnComment">
+                                        <div class="input-group-append">
+                                            <button class="pl-4 pr-4 btn btn-info" type="button" id="btnComment">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Doctors -->
+            <div class="col-md-4">
+                <div class="top-doctors">
+                    <div class="card rounded-lg">
+                        <div class="card-header">
+                            <h4 class="text-lite mb-0 text-capitalize">
+                                Top 5 Doctors in Specialization
+                            </h4>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="ml-0 text-info d-block card-link">Mostafa Yasin</a>
+                            <a href="#" class="ml-0 text-info d-block card-link">Ahmed Medhat</a>
+                            <a href="#" class="ml-0 text-info d-block card-link">Walid Qutb</a>
+                            <a href="#" class="ml-0 text-info d-block card-link">Mahmoud Shaaban</a>
+                            <a href="#" class="ml-0 text-info d-block card-link">Rehab Mohamed</a>
+                            <a href="#" class="ml-0 text-info d-block card-link">Fatma Adel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/community.js' %}"></script>
+{% endblock %}

@@ -29,6 +29,7 @@ urlpatterns = [
     path('logout/', profile_views.logout_view, name='logout'),
     path('register/', profile_views.register, name='register'),
     path('communities/', communities_views.communities, name='communities'),
+    path('communities/<int:pk>', communities_views.community, name='community'),
 ]
 
 if settings.DEBUG:

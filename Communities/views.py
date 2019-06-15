@@ -18,3 +18,17 @@ def communities(request):
         print('0' * 50)
         print('User Not Authenticated')
         return redirect('/')
+
+@login_required
+def community(request, pk):
+    community = Community.objects.get(pk=pk)
+    
+    if community is None:
+        print('Community Not Found.')
+        return redirect('/communities/')
+
+    context = {
+        'community': community 
+    }
+
+    return render(request, 'community.html', context=context)

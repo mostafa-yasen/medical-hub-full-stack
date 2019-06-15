@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MedicalHub</title>
 
+    
     <!-- Start Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/font-awesome/css/all.min.css' %}">
     {% block styles %}
     {% endblock %}
     <!-- End Styles -->
@@ -19,8 +24,7 @@
 
 
     <!-- Start Navbar -->
-    {% block navbar %}
-    {% endblock %}
+    {% include 'navbar.html' %}
     <!-- End Navbar -->
 
 
@@ -46,6 +50,12 @@
 
 
     <!-- Start Scripts -->
+    <script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'lib/font-awesome/js/all.min.js' %}"></script>
+
     {% block scripts %}
     {% endblock %}
     <!-- End Scripts -->    
