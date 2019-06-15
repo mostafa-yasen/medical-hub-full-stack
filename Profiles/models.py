@@ -14,7 +14,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # Start Global Attributes
-    pic = models.ImageField(upload_to='images/', default='images/no-pic.png')
+    pic = models.ImageField(upload_to='images/', default='images/no-pic.svg')
     
     # Phone
 

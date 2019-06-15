@@ -30,6 +30,8 @@ urlpatterns = [
     path('register/', profile_views.register, name='register'),
     path('communities/', communities_views.communities, name='communities'),
     path('communities/<int:pk>', communities_views.community, name='community'),
+    path('communities/<int:community_id>/post/', communities_views.create_post, name='post'),
+
 ]
 
 if settings.DEBUG:
