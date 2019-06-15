@@ -23,19 +23,19 @@
             </button>
         </div>
         <div class="modal-body">
-            <form action="/login/" method="GET">
+            <form action="/login/" method="POST"> {% csrf_token %}
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Username</span>
                     </div>
-                    <input type="email" class="form-control" id="user-username">
+                    <input type="username" name="username" class="form-control" id="user-username">
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Password</span>
                     </div>
-                    <input type="password" class="form-control" id="user-password">
+                    <input type="password" name="password" class="form-control" id="user-password">
                 </div>
                 <div class="modal-footer">
                     <a class="text-danger" data-dismiss="modal">Close</a>
@@ -57,41 +57,41 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/register/" method="POST">
+                <form action="/register/" method="POST"> {% csrf_token %}
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">First and last name</span>
                         </div>
-                        <input type="text" aria-label="First name" class="form-control">
-                        <input type="text" aria-label="Last name" class="form-control">
+                        <input type="text" name="first_name" aria-label="First name" class="form-control">
+                        <input type="text" name="last_name" aria-label="Last name" class="form-control">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Email</span>
                         </div>
-                        <input type="email" class="form-control" id="user-email">
+                        <input type="email" name="email" class="form-control" id="user-email">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Confirm Email</span>
                         </div>
-                        <input type="email" class="form-control" id="user-email-confirm">
+                        <input type="email" name="confirm_email" class="form-control" id="user-email-confirm">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Phone</span>
                         </div>
-                        <input type="Phone" class="form-control" id="user-phone">
+                        <input type="Phone" name="phone" class="form-control" id="user-phone">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Gender</label>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01">
-                            <option selected value="male">Male</option>
-                            <option value="female">Female</option>
+                        <select name="gender" class="custom-select" id="inputGroupSelect01">
+                            <option selected value="m">Male</option>
+                            <option value="f">Female</option>
                         </select>
                     </div>
 
@@ -99,23 +99,30 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Register as</label>
                         </div>
-                        <select class="custom-select" id="inputGroupSelect01">
-                            <option selected value="male">User</option>
-                            <option value="female">Doctor</option>
+                        <select name="user_type" class="custom-select" id="inputGroupSelect01">
+                            <option selected value="p">User</option>
+                            <option value="doctor">Doctor</option>
                         </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">National id</span>
+                        </div>
+                        <input type="text" name="nid" class="form-control" id="user-new-nid">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Password</span>
                         </div>
-                        <input type="password" class="form-control" id="user-new-password">
+                        <input type="password" name="password" class="form-control" id="user-new-password">
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Re-enter Password</span>
                         </div>
-                        <input type="password" class="form-control" id="user-new-password-confirm">
+                        <input type="password" name="confirm_password" class="form-control" id="user-new-password-confirm">
                     </div>
                     <div class="modal-footer">
                         <a class="text-danger" data-dismiss="modal">Close</a>

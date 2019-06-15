@@ -30,6 +30,8 @@ class Profile(models.Model):
     
     nid = models.CharField(max_length=15, blank=True)
 
+    phone = models.CharField(max_length=12, blank=True)
+
     # Start Patient Attributes
 
     # Start Doctor Attributes
