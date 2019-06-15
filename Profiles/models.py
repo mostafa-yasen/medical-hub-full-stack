@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -9,12 +8,15 @@ GENDERS = (
     ('F', 'female')
 )
 
+
 class Profile(models.Model):
     # Extend Django Auth's User
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     # Start Global Attributes
     pic = models.ImageField(upload_to='images/', default='images/no-pic.png')
+    
+    # Phone
 
     bio = models.TextField(max_length=500, blank=True)
     

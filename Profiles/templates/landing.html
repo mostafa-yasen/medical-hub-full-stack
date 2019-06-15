@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+<!-- Styles -->
+{% block styles %}
+<link href="https://fonts.googleapis.com/css?family=Aldrich&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/font-awesome/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+<!-- Modals -->
+{% block modals %}
+
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="/login/" method="GET">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Username</span>
+                    </div>
+                    <input type="email" class="form-control" id="user-username">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Password</span>
+                    </div>
+                    <input type="password" class="form-control" id="user-password">
+                </div>
+                <div class="modal-footer">
+                    <a class="text-danger" data-dismiss="modal">Close</a>
+                    <button class="btn btn-danger" type="submit">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/register/" method="POST">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First and last name</span>
+                        </div>
+                        <input type="text" aria-label="First name" class="form-control">
+                        <input type="text" aria-label="Last name" class="form-control">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Email</span>
+                        </div>
+                        <input type="email" class="form-control" id="user-email">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Confirm Email</span>
+                        </div>
+                        <input type="email" class="form-control" id="user-email-confirm">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Phone</span>
+                        </div>
+                        <input type="Phone" class="form-control" id="user-phone">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Register as</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01">
+                            <option selected value="male">User</option>
+                            <option value="female">Doctor</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                        </div>
+                        <input type="password" class="form-control" id="user-new-password">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Re-enter Password</span>
+                        </div>
+                        <input type="password" class="form-control" id="user-new-password-confirm">
+                    </div>
+                    <div class="modal-footer">
+                        <a class="text-danger" data-dismiss="modal">Close</a>
+                        <button type="submit" class="btn btn-danger">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- Navbar -->
+{% block navbar %}
+<nav class="navbar navbar-expand-lg" id="navbar">
+
+    <div class="container">
+
+        <a class="navbar-brand" href="/">Medical<span>Hub</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navLinks"
+            aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navLinks">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" id="loginBtn" data-toggle="modal" data-target="#loginModal">
+                        <i class="fas fa-sign-in-alt"></i>login
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#registerModal" id="registerBtn" class="nav-link" data-toggle="modal" data-target="#registerModal">
+                        <i class="fas fa-user-alt"></i>register</a>
+                </li>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+    <!-- Start Header -->
+    <div id="header">
+        <div class="overlay">
+            <div class="container">
+                <div class="col col-6 ml-auto">
+                    <h1 class="typed" id="typed">
+                    </h1>
+                </div>
+
+                <a href="#about" class="more">
+                    <i class="fas fa-angle-double-down"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- End Header -->
+
+    <!-- Start About -->
+    <div id="about" class="bg-white">
+        <div class="container">
+            <div class="title">
+                <h5>About Us</h5>
+            </div>
+
+            <div class="about-content">
+                <p>
+                    Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
+                    Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
+                    tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
+                    snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
+                    toffee soufflé.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- End About -->
+
+    <!-- Start WhyChooseUs -->
+    <div id="WhyChooseUs">
+        <div class="container">
+            <div class="why-content">
+                <p>
+                    Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
+                    Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
+                    tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
+                    snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
+                    toffee soufflé.
+                </p>
+            </div>
+            <div class="title">
+                <h5>Why Choose Us ?</h5>
+            </div>
+        </div>
+    </div>
+    <!-- End WhyChooseUs -->
+
+    <!-- Start Developers -->
+    <div id="developers">
+        <div class="container-fluid">
+            <div class="title col-md-12">
+                <h3>Meet Our Developers</h3>
+            </div>
+
+            <div class="container">
+                <div class="devs-cards row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="dev-card">
+                            <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                            <h5 class="dev-name">Mostafa Yasin</h5>
+
+                            <span class="dev-title">Full-Stack Python Developer</span>
+                            <ul class="dev-social-links">
+                                <li class="dev-facebook"><a href="#">
+                                        <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                    </a>
+                                </li>
+                                <li class="dev-twitter"><a href="#">
+                                        <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Developers -->
+{% endblock %}
+
+<!-- Footer -->
+{% block footer %}
+    <!-- Start Footer -->
+    <footer>
+        <h5>Made With <span class="heart-beating"> <i class="fas fa-heart"></i> </span> under supervision of FCI-Minia
+            University</h5>
+    </footer>
+    <!-- End Footer -->
+{% endblock %}
+
+<!-- Scripts -->
+{% block scripts %}
+    <script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'lib/font-awesome/js/all.min.js' %}"></script>
+
+    <script src="{% static 'lib/Typed.js/typed.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
