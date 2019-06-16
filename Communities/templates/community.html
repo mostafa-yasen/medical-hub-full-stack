@@ -5,6 +5,34 @@
 <link rel="stylesheet" href="{% static 'css/community.css' %}">
 {% endblock %}
 
+
+{% block modals %}
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="PostModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="postModalUserName" style="line-height: .8em">
+                <span class="postCreator text-info text-capitalize"></span>
+                <br>
+                <span class="text-secondary text-sm" id="postModalTime"></span>
+            </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="postContent text-fadded" style="font-size: 1.3em">
+          </div>
+        </div>
+        <div class="comments text-fadded-1" id="comments">
+            
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
 {% block content %}
 <!-- Title -->
 <div class="content">
@@ -70,12 +98,16 @@
                                     </div>
                                     <div class="col-lg-2 col-md-12 col-sm-12 pt-3" style="text-align: center">
                                         <span class="text-danger">
-                                            {{post.likes}}
+                                            <span class="like-count">
+                                                    {{post.likes}}
+                                            </span>
                                             <i class="fas fa-heart"></i>
                                         </span>
                                         <!-- <br> -->
                                         <span class="text-secondary">
-                                            {{post.comments}}
+                                            <span class="commentCount">
+                                                {{post.comments}}
+                                            </span>
                                             <i class="far fa-comment-alt"></i>
                                         </span>
                                     </div>
@@ -88,27 +120,26 @@
     
                             <div class="card-footer p-0">
                                 <div class="row m-0">
-                                    <div class="m-0 p-0 col-6 border-right text-center btn-like">
-                                        <a class="text-danger pt-2 pb-2 d-block">
+                                    <div data-post_id="{{ post.pk }}" class="m-0 p-0 col-6 border-bottom border-right text-center btn-like">
+                                        <a class="text-danger likeBtn pt-2 pb-2 d-block">
                                             <i class="far fa-heart"></i>
                                         </a>
                                     </div>
-                                    <div class="m-0 p-0 col-6 text-center">
-                                        <a href="#" class="text-secondary pt-2 pb-2 d-block">
+                                    <div class="m-0 p-0 col-6 border-bottom text-center">
+                                        <a href="#" data-toggle="modal" data-target="#postModal" data-post_id="{{ post.pk }}" class="text-secondary getFullComments pt-2 pb-2 d-block">
                                             <i class="far fa-comment-alt"></i>
                                         </a>
                                     </div>
-                                    <div class="col-12 write-comment mt-3 " id="writeComment">
+                                    <div class="col-12 write-comment mt-3" id="writeComment">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder="Write Comment"
                                                 aria-label="Write Comment" aria-describedby="btnComment">
                                             <div class="input-group-append">
-                                                <button class="pl-4 pr-4 btn btn-info" type="button" id="btnComment">
+                                                <button class="pl-4 pr-4 btn btn-info addCommentBtn" type="button" data-post_id="{{ post.id }}">
                                                     <i class="fas fa-chevron-right"></i>
                                                 </button>
                                             </div>
                                         </div>
-    
                                     </div>
                                 </div>
                             </div>
@@ -147,8 +178,9 @@
 <script src="{% static 'js/community.js' %}"></script>
 
 <script>
-    var newPostBtn = $('#newPostBtn');
 
+    // Start Adding New Post
+    var newPostBtn = $('#newPostBtn');
     newPostBtn.on('click', function () {
         var newPostText = $('#newPostText');
 
@@ -168,6 +200,136 @@
             });
         }
     });
+    // End Adding New Post
+
+    // Start Show Post Details Modal
+    var modal = $('#postModal');
+    modal.on('show.bs.modal', function (e) {
+        var getCommentsBtn = $(e.relatedTarget);
+        var post_id = getCommentsBtn.data('post_id');
+        var community_id = "{{ community.id }}";
+
+        getComments(post_id, community_id);
+
+    });
+    function getComments(post_id, community_id){
+        $.ajax({
+                url: "/communities/"+ community_id +"/post/" + post_id + "/comments/"
+            }).done(function (obj) {
+                // Start Displaying Data.
+                var modal = $("#postModal");
+
+                // Extract creator data
+                creator = JSON.parse(obj.creator);
+                creator = creator[0].fields.first_name + ' ' + creator[0].fields.last_name
+                
+                // Extract post data
+                post = JSON.parse(obj.post);
+                postDate = new Date(post[0].fields.date);
+                postContent = post[0].fields.content;
+
+                // extract comments
+                comments = JSON.parse(obj.comments)
+
+                modal.find('.postCreator').text(creator);
+                
+                modal.find('#postModalTime').text(postDate.toDateString());
+
+                modal.find('.postContent').text(postContent);
+
+                $('#comments').html('');
+                for (let i = 0; i < comments.length; i++){
+                    const el = comments[i];
+                                        
+                    var comment = el.fields.content
+                    var commentTime = new Date(el.fields.date)
+
+                    newElement = '<div class="card m-1"><div class="card-header">'+ comment +'<br><span class="commentDate text-fadded-2 text-md">'+ commentTime.toString() +'</span></div></div>'
+
+                    $('#comments').append(newElement);
+                }
+            });
+    }
+    // End Show Post Details Modal
+    
+    // Start Adding New Comments
+    $('.addCommentBtn').each(function (e) {
+        $(this).on('click', function () {
+            var post_id = $(this).data('post_id');
+            var community_id = '{{ community.id }}'            
+
+            var commentText = $($(this).parent().siblings()[0]);
+
+            if(commentText.val() == ''){
+                return false
+            }
+            addComment(community_id, post_id, commentText.val());
+            commentText.val('');
+            var counter = $(this).parents('.card').find('.commentCount');
+
+            counter.text(parseInt(counter.text()) + 1)
+
+        });
+    });
+    
+    var addComment = function (community_id, post_id, commentText) {
+        $.ajax({
+            method: 'post',
+            url: community_id + '/post/' + post_id + '/comment/',
+            data: {
+                'comment_text': commentText,
+                'post_id': post_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                
+            }
+        });
+    }
+    // End Adding New Comments
+
+
+    // Start Like Process.
+    $('.btn-like').each(function (event) {
+        var post_id = $(this).data('post_id');
+        $(this).on('click', function (e) {
+            var current = $(this);
+            current.toggleClass('active');            
+
+            var op = 'like';
+
+            if ($(this).hasClass('active')){
+                op = 'like'
+            } else {
+                op = 'dislike'
+            }
+
+            console.log(post_id);
+            
+            $.ajax({
+                method:'post',
+                url: '/communities/{{ community.pk }}/post/' + post_id + '/like/',
+                data: {
+                    'operation': op,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+
+                },
+                success: function (result) {
+                    // alert('Request Done');
+                    // window.location.reload();
+
+                    var counter = current.parents('.card').find('.like-count');
+                    if (op == 'like'){
+                        counter.text( parseInt(counter.text()) + 1);
+                    } else {
+                        counter.text(parseInt(counter.text()) - 1);
+                    }
+
+                }
+            })
+        });
+    });
+    // End Like Process.
 
 </script>
 

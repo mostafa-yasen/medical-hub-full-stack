@@ -19,8 +19,13 @@ class Post(models.Model):
     comments = models.IntegerField(default=0)
     content = models.TextField()
 
+    def calcComments(self):
+        self.comments = Comment.objects.filter(post=self).count()
+        return
+
     def __str__(self):
-        return 'Post on %s' % self.community
+        return self.content[:15]
+
 
 class Comment(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -30,4 +35,4 @@ class Comment(models.Model):
     content = models.TextField()
 
     def __str__(self):
-        return 'Comment on %s' % self.post
+        return self.content[:15]

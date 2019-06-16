@@ -31,6 +31,9 @@ urlpatterns = [
     path('communities/', communities_views.communities, name='communities'),
     path('communities/<int:pk>', communities_views.community, name='community'),
     path('communities/<int:community_id>/post/', communities_views.create_post, name='post'),
+    path('communities/<int:community_id>/post/<int:post_id>/comments/', communities_views.getComments, name='comments'),
+    path('communities/<int:community_id>/post/<int:post_id>/comment/', communities_views.addComment, name='comment'),
+    path('communities/<int:community_id>/post/<int:post_id>/like/', communities_views.like, name='like'),
 
 ]
 
