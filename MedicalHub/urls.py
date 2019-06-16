@@ -14,26 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static 
 
 from Profiles import views as profile_views
-from Communities import views as communities_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', profile_views.loading, name='loading'),
-    path('home/', profile_views.home, name='home'),
-    path('login/', profile_views.login_view, name='login'),
-    path('logout/', profile_views.logout_view, name='logout'),
-    path('register/', profile_views.register, name='register'),
-    path('communities/', communities_views.communities, name='communities'),
-    path('communities/<int:pk>', communities_views.community, name='community'),
-    path('communities/<int:community_id>/post/', communities_views.create_post, name='post'),
-    path('communities/<int:community_id>/post/<int:post_id>/comments/', communities_views.getComments, name='comments'),
-    path('communities/<int:community_id>/post/<int:post_id>/comment/', communities_views.addComment, name='comment'),
-    path('communities/<int:community_id>/post/<int:post_id>/like/', communities_views.like, name='like'),
+    path('', include('Profiles.urls')),
+    path('communities/', include('Communities.urls')),
 
 ]
 

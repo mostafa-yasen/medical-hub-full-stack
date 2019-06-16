@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
-from django.contrib.auth import logout
-from django.contrib.auth import login
+from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 
 
 def loading(request):
@@ -35,8 +35,6 @@ def login_view(request):
         return redirect('/communities/')
 
     return render(request, 'login.html')
-
-
 
 def register(request):
     if request.POST:
@@ -83,3 +81,7 @@ def register(request):
         return redirect('/login/')
     
     return render(request, 'register.html')
+
+@login_required
+def profile(request):
+    return render(request ,'user-profile.html')

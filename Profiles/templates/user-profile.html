@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'css/profile.css' %}"> -->
+{% endblock %}
+
+{% block content %}
+<div class="container profile-content" id="profile-content">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-3 col-md-6 col-sm-12 bg-white box-shadow pt-5">
+            <div class="profile-image ml-auto mr-auto">
+                <img src="{{ request.user.profile.pic.url }}" alt="Image Not Found">
+            </div>
+            <div class="user-info mt-4">
+                <h6 class="user-info-name text-capitalize">{{ request.user.get_full_name }}</h6>
+                <h6 class="user-info-city">
+                    <span class="text-danger">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </span>
+                    {{ request.user.profile.address }}</h6>
+                <h6 class="user-info-id">
+                    <span class="text-success">
+                            <i class="fas fa-id-card-alt"></i>
+                    </span>
+                    {{ request.user.profile.nid }}
+                </h6>
+                <h6 class="user-info-gender">
+                    <span class="text-secondary">
+                        <i class="fas fa-venus-mars"></i>
+                    </span>
+                    {% if request.user.profile.gender == 'M' %} Male {% else %} Female {% endif %}
+                </h6>
+            </div>
+
+            <!-- HERE -->
+            <div class="medical-info mb-5">
+                <h3 class="title text-fadded">Medical Info</h3>
+                <ul class="medical-info-items">
+                    <li class="medical-info-item">Blood Type: O-</li>
+                    <li class="medical-info-item">Weight: 60kg</li>
+                    <li class="medical-info-item">Height: 165cm</li>
+                    <li class="medical-info-item">Age: 23</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-lg-9 col-md-6 col-sm-12 pl-5 pt-5 ">
+            <div class="prev-diagnoses">
+                <h3 class="title">Previos Diagnosis</h3>
+
+                <div class="diagnose">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Special treatment</h5>
+                            <p class="card-text">
+
+                                With supporting text below as a natural lead-in to additional content.
+                                
+                                With supporting text below as a natural lead-in to additional content.
+                                With supporting text below as a natural lead-in to additional content.
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagnose">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Special treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

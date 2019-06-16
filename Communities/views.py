@@ -48,7 +48,6 @@ def create_post(request, community_id):
     if request.method == 'POST':
         
         content = request.POST['post_content']
-        # user = User.objects.get(request.POST['user_id'])
         community = Community.objects.get(pk=community_id)
 
         post = Post(
