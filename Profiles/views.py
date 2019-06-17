@@ -4,8 +4,8 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
-from .models import Profile, Diagnose
-
+from .models import Profile, Diagnose, Question
+from django.http import JsonResponse
 
 def loading(request):
     return render(request, 'loading.html')
@@ -67,9 +67,13 @@ def register(request):
             email=email,
             username=email
         )
-
+        # Set Gender
         user.profile.gender = gender
-        if user_type == 'u':
+
+        # Set User Type
+        print('=' * 50)
+        print(user_type)
+        if user_type == 'p':
             user.profile.is_doctor = False
         else:
             user.profile.is_doctor = True
@@ -79,7 +83,7 @@ def register(request):
 
         user.save()
         
-        return redirect('/login/')
+        return redirect('/')
     
     return render(request, 'register.html')
 
@@ -125,7 +129,84 @@ def users_details(request, user_id):
         'user': user,
         'diagnoses': diagnoses
     }
+    return render(request, template, context=context)
 
+@login_required
+def diagnose(request, user_id):
+    doctor = request.user
+    patient = User.objects.get(id=user_id)
 
+    if not doctor.profile.is_doctor:
+        return JsonResponse({'error':'user is not a doctor'})
+
+    txtTitle = request.POST['txtTitle']
+    txtContent = request.POST['txtContent']
+
+    newDiagnose = Diagnose(
+        patient=patient,
+        doctor=doctor.profile,
+        title=txtTitle,
+        content=txtContent
+    )
+
+    print('=' * 50)
+    print(newDiagnose)
+
+    newDiagnose.save()
+
+    return JsonResponse({'error':'None'})
+
+@login_required
+def doctors(request):
+    template = 'doctors.html'
+
+    all_users = User.objects.all()
+    doctors = []
+
+    for user in all_users:
+        if user.profile.is_doctor:
+            doctors.append(user)
+
+    context = {
+        'doctors': doctors
+    }
 
     return render(request, template, context=context)
+
+@login_required
+def doctor_details(request, doctor_id):
+    template = 'doctor-details.html'
+    doctor = User.objects.get(id=doctor_id)
+
+    questions = Question.objects.filter(doctor=doctor.profile)
+
+    context = {
+        'doctor': doctor,
+        'questions': questions
+    }
+
+    return render(request, template, context)
+
+login_required
+def ask(request, doctor_id):
+    doctor = User.objects.get(id=doctor_id)
+    patient = request.user
+
+    content = request.POST['txtContent']
+    print('=' * 50)
+    print(content)
+    print('=' * 50)
+    if request.POST['anonymous']:
+        anonymous = True
+    else:
+        anonymous = False
+
+    newQuestion = Question(
+        doctor=doctor.profile,
+        patient=patient,
+        content=content,
+        anonymous=anonymous
+    )
+    newQuestion.save()
+
+    return redirect('/')

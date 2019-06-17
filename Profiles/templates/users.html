@@ -32,7 +32,7 @@
                         </h6>
                         <p class="card-text text-fadded-2">ID: {{ user.profile.nid }}</p>
                         <!-- <p class="card-text"></p> -->
-                        <a href="user-details.html" class="btn btn-danger m-auto d-block">View Profile</a>
+                        <a href="{% url 'user_details' user.id %}" class="btn btn-danger m-auto d-block">View Profile</a>
                     </div>
                 </div>
             </div>

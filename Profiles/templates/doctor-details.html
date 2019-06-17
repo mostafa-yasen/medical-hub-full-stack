@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/doctor-details.css' %}">
+{% endblock %}
+
+
+{% block modals %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="content pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+            <!-- Start Doctor Details -->
+            <div class="col-md-3">
+                <div class="doctor-details">
+                    <div class="image-container mb-4 rounded">
+                        <img src="{{ doctor.profile.pic.url }}" alt="Not Found">
+                    </div>
+                    <div class="doctor-info bg-white">
+                        <h4 class="text-fadded pt-4 text-capitalize text-center mb-1">
+                            Dr. {{ doctor.get_full_name }}
+                            <br>
+                            <!-- RATE -->
+                            <span class="rate text-warning">
+                                {% for i in '12345' %}
+                                {% if forloop.counter <= doctor.profile.rate %}
+                                <i class="fas fa-star"></i>
+                                {% else %}
+                                <!-- <i class="fas fa-star-half-alt"></i> -->
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                                {% endfor %}
+                            </span>
+                        </h4>
+                        <div class="card text-center m-3">
+                            <div class="card-header">
+                                BIO
+                            </div>
+                            <div class="card-body p-2">
+                                {{ doctor.profile.bio }}
+                            </div>
+                        </div>
+
+                        <div class="p-3">
+                            <div class="doctor-address row no-gutters">
+                                <div class="text-center col-1 pl-0 pr-0">
+                                    <span class="text-danger">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </span>
+                                </div>
+                                <div class="col-11 pl-2 pr-0">
+                                    15, Sadat st, El-Minia
+                                </div>
+                            </div>
+                            <div class="doctor-id row no-gutters">
+                                <div class="text-center col-1 pl-0 pr-0">
+                                    <span class="text-success">
+                                        <i class="fas fa-id-card-alt"></i>
+                                    </span>
+                                </div>
+                                <div class="col-11 pl-2 pr-0">
+                                    2 952310 240 3435
+                                </div>
+                            </div>
+                            <div class="doctor-speciality row no-gutters">
+                                <div class="text-center col-1 pl-0 pr-0">
+                                    <span class="text-info">
+                                        <i class="fas fa-stethoscope"></i>
+                                    </span>
+                                </div>
+                                <div class="col-11 pl-2 pr-0">
+                                    Cardiology
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Doctor Details -->
+
+            <!-- Start Asking Area -->
+            <div class="col-md-9">
+                <!-- Start Ask New Question -->
+                <form id="formAsk" method="POST">
+                    <div class="form-group">
+                        <textarea class="form-control" name="txtContent" id="txtContent" rows="3"></textarea>
+                    </div>
+                    <div class="form-group row no-gutters">
+                        <div class="col-md-9">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="anonymous" class="custom-control-input" id="anonymous">
+                                <label class="custom-control-label" for="anonymous">
+                                    Ask anonymously
+                                </label>
+                            </div>
+                            <label class="text-fadded-2">
+                                Ask <span class="text-info text-capitalize">Dr. {{ doctor.first_name }}</span> for advice, help, appointment even
+                                his favourite drink.
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger ml-auto d-block" id="askBtn" style="width: 80%">Ask</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- End Ask New Question -->
+
+                <!-- Start Previously asked questions -->
+                <h4 class="mt-5 mb-2 text-lite text-fadded text-upper text-center">Previously asked questions</h4>
+                
+                <!-- Start List -->
+                {% for question in questions %}
+                    {% if question.answer %}
+                    <div class="card mb-3">
+                        <div class="card-header" style="line-height: .5em">
+                            {% if not question.anonymous %}
+                                <div class="text-md text-fadded-2">Asked by <a href="#" class="text-info">{{ question.patient.get_full_name }}</a> <i class="far fa-clock"></i> {{ question.date }} </div>
+                                <br>
+                            {% else %}
+                                <div class="text-fadded-2 text-md">
+                                    Asked Anonymously <i class="far fa-clock"></i> {{ question.date }}
+                                </div>
+                            {% endif %}
+                            <h5 class="m-0 text-fadded">{{ question.content }}</h5>
+                        </div>
+                        <div class="card-body pt-1">
+                            <span class="text-fadded-2 text-md">
+                                <a href="#" class="text-info">Dr. {{ question.doctor.user.get_full_name }}</a> 
+                                Answered.
+                            </span>
+                            <br>
+                            {{ question.answer }}
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <!-- End List -->
+                <!-- End Previously asked questions -->
+            </div>
+            <!-- End Asking Area -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    var form = $('#formAsk');
+
+    form.on('submit', function(e) {
+        var txtContent = $('#txtContent');
+        var anonymous = $('#anonymous').prop('checked');
+
+        $.ajax({
+            method: 'post',
+            url: "{% url 'ask' doctor.id %}",
+            data: {
+                txtContent: txtContent.val(),
+                anonymous: anonymous,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (result) {
+                txtContent.val('');
+                alert("Question Sent Successfully.")
+            },
+            error: function (error) {
+                alert(error.toString());
+            }
+        });
+        e.preventDefault();
+
+    });
+
+    
+</script>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/doctors.css' %}">
+{% endblock %}
+
+
+{% block modals %}
+<!-- Modal -->
+<div class="modal fade" id="askModal" tabindex="-1" role="dialog" aria-labelledby="askLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-secondary" id="askLabel">Ask Mostafa about whatever you want.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <div class="form-group">
+                        <!-- <label for="exampleFormControlTextarea1">Example textarea</label> -->
+                        <textarea class="form-control" id="newQuestion" rows="3"></textarea>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="checkbox" class="custom-control-input" id="customControlValidation1" required>
+                        <label class="custom-control-label" for="customControlValidation1">Ask anonymously</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="text-danger" data-dismiss="modal">Cancel</a>
+                <button type="button" class="btn btn-danger">Send Question</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content">
+    <div id="doctors" class="pt-4 pb-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h1 class="text-upper text-center text-fadded doctors-title">Search for a propper doctor</h1>
+
+                    <!-- Start Search -->
+                    <form class="form ml-auto mr-auto">
+                        <div class="input-group">
+                            <input type="text" name="q" class="search form-control form-control-lg"
+                                placeholder="Name, City, Speciality .. whatever you need." aria-label="Username"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </form>
+                    <!-- End Search -->
+                </div>
+
+                <div class="col-lg-10 col-sm-12 pt-4">
+
+                    <div class="row justify-content-center">
+                        {% for doctor in doctors %}
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="card mb-4">
+                                <div class="row no-gutters">
+                                    <div class="col-md-12 col-lg-12">
+                                        <div class="image-container">
+                                            <img src="{{ doctor.profile.pic.url }}" class="card-img" style="max-height: 250px" alt="Not Found">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card-body pr-2">
+                                            <h3 class="card-title doctor-name text-upper">
+                                                {{ doctor.get_full_name }}
+                                                <span class="doctor-rate card-text text-fadded-1 d-block">
+                                                    {% for i in '12345' %}
+                                                        {% if forloop.counter <= doctor.profile.rate %}
+                                                        <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                        <!-- <i class="fas fa-star-half-alt"></i> -->
+                                                        <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            </h3>
+                                            <span class="doctor-speciality card-text text-fadded-1 d-block">
+                                                <i class="fas fa-user-md"></i> {{ doctor.profile.specialization }}
+                                            </span>
+                                            <span class="doctor-address card-text text-fadded-1 d-block">
+                                                <i class="fas fa-map-marker-alt"></i> {{ doctor.profile.city }} 
+                                            </span>
+
+                                            <a class="btn btn-danger mb-2" href="{% url 'doctor-details' doctor.id %}" style="float: right;">Vistit</a>
+                                            <a class="btn text-danger mb-2" data-toggle="modal" data-target="#askModal" style="float: right;color: aliceblue">Ask</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

@@ -16,15 +16,14 @@
               </button>
             </div>
             <div class="modal-body">
-                <label for="">Diagnose Title</label>
-                <textarea name="diagnose-title" class="form-control m-0" id="" cols="30" rows="2"></textarea>
-
-                <label for="" class="mt-3">Diagnose Content</label>
-                <textarea name="diagnose-title" class="form-control m-0" id="" cols="30" rows="3"></textarea>
+                <label for="txtTitle">Diagnose Title</label>
+                <textarea name="diagnose-title" class="form-control m-0" id="txtTitle" cols="30" rows="2"></textarea>
+                <label for="txtContent" class="mt-3">Diagnose Content</label>
+                <textarea name="diagnose-title" class="form-control m-0" id="txtContent" cols="30" rows="3"></textarea>
             </div>
             <div class="modal-footer">
               <a class="text-danger" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-danger">Submit Diagnose</button>
+              <button type="button" id="submitDiagnose" class="btn btn-danger">Submit Diagnose</button>
             </div>
           </div>
         </div>
@@ -121,5 +120,40 @@
 
 
 {% block scripts %}
+<script>
+    var submitDiagnose = $('#submitDiagnose');
+    submitDiagnose.on('click', function (e) {
+        e.preventDefault();
 
+        var txtTitle = $('#txtTitle').val();
+        var txtContent = $('#txtContent').val();
+
+        if (txtContent == '' || txtTitle == '') {
+            alert('Please Provide Valid Data!');
+            return;
+        }
+
+        // Start Ajax Request.
+        $.ajax({
+           method: 'post',
+           url: '/users/{{user.id}}/diagnose/',
+           data: {
+               txtTitle: txtTitle,
+               txtContent: txtContent,
+               csrfmiddlewaretoken: '{{ csrf_token }}'
+           },
+           success: function (res) {
+                if (res.error != 'None'){
+                    alert(res.error)
+                }
+                window.location.reload();
+           },
+           error: function (e) {
+               alert('Error Occured')
+           }
+        });
+
+
+    })
+</script>
 {% endblock %}

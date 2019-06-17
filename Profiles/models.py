@@ -5,8 +5,8 @@ from django.dispatch import receiver
 from datetime import datetime
 
 GENDERS = (
-    ('M', 'male'),
-    ('F', 'female')
+    ('M', 'Male'),
+    ('F', 'Female')
 )
 
 
@@ -25,7 +25,7 @@ class Profile(models.Model):
     
     address = models.CharField(max_length=120, blank=True)
     
-    gender = models.CharField(max_length=1, choices=GENDERS, default='m')
+    gender = models.CharField(max_length=1, choices=GENDERS, default='M')
     
     is_doctor = models.BooleanField(default=False)
     
@@ -69,3 +69,27 @@ class Diagnose(models.Model):
 
     def __str__(self):
         return self.title[:15]
+
+
+class Question(models.Model):
+    patient = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    date = models.DateTimeField(auto_now=True)
+    content = models.TextField()
+    answer = models.TextField(blank=True)
+    anonymous = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.content[:30]
+
+
+# class Answer(models.Model):
+#     content = models.TextField()
+#     date = models.DateTimeField(auto_now=True)
+
+#     question = models.ForeignKey(Question, on_delete=models.CASCADE) 
+
+#     def __str__(self):
+#         return self.content[:30]
+
