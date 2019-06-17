@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 
 GENDERS = (
     ('M', 'male'),
@@ -47,7 +48,6 @@ class Profile(models.Model):
         else:
             return str(self.user.username)
 
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -56,3 +56,16 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class Diagnose(models.Model):
+    patient = models.ForeignKey(User, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+    date = models.DateTimeField(auto_now=True)
+
+    title = models.TextField()
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title[:15]

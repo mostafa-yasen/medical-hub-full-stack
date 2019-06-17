@@ -15,12 +15,15 @@
                 <img src="{{ request.user.profile.pic.url }}" alt="Image Not Found">
             </div>
             <div class="user-info mt-4">
-                <h6 class="user-info-name text-capitalize">{{ request.user.get_full_name }}</h6>
+                <h6 class="user-info-name text-capitalize text-center">{{ request.user.get_full_name }}</h6>
                 <h6 class="user-info-city">
+                    {% if request.profile.address %}
                     <span class="text-danger">
                         <i class="fas fa-map-marker-alt"></i>
                     </span>
-                    {{ request.user.profile.address }}</h6>
+                    {{ request.user.profile.address }}
+                    {% endif %}
+                </h6>
                 <h6 class="user-info-id">
                     <span class="text-success">
                             <i class="fas fa-id-card-alt"></i>
@@ -50,33 +53,32 @@
 
         <div class="col-lg-9 col-md-6 col-sm-12 pl-5 pt-5 ">
             <div class="prev-diagnoses">
-                <h3 class="title">Previos Diagnosis</h3>
+                <h3 class="text-center text-upper mb-3">Previos Diagnosis</h3>
 
+                {% for diagnose in diagnoses %}
                 <div class="diagnose">
                     <div class="card mb-3">
+                        <div class="card-header">
+                            <span class="text-md text-fadded">
+                                Diagnosed by
+                            </span>
+                            <span class="text-capitalize">
+                                <a href="#" class="text-info">
+                                    Dr.{{ diagnose.doctor.user.get_full_name }}
+                                </a>
+                            </span>
+                            <span class="text-md text-fadded">on {{ diagnose.date }}</span>
+                            <h5 class="m-0">{{ diagnose.title }}</h5>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title">Special treatment</h5>
                             <p class="card-text">
-
-                                With supporting text below as a natural lead-in to additional content.
-                                
-                                With supporting text below as a natural lead-in to additional content.
-                                With supporting text below as a natural lead-in to additional content.
-
+                                {{ diagnose.content }}
                             </p>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
-                <div class="diagnose">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Special treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

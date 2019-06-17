@@ -4,6 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
+from .models import Profile, Diagnose
 
 
 def loading(request):
@@ -84,4 +85,47 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request ,'user-profile.html')
+    user = request.user
+    diagnoses = None
+
+    if not user.profile.is_doctor:
+        diagnoses = Diagnose.objects.filter(patient=user)
+    
+    context = {
+        'diagnoses': diagnoses
+    }
+
+    return render(request ,'user-profile.html', context=context)
+
+
+@login_required
+def users(request):
+    template = 'users.html'
+
+    all_users = User.objects.all()
+    users = []
+
+    for user in all_users:
+        if not user.profile.is_doctor:
+            users.append(user)
+
+    context = {
+        'users': users
+    }
+
+    return render(request, template, context=context)
+
+@login_required
+def users_details(request, user_id):
+    template = 'user-details.html'
+    user = User.objects.get(id=user_id)
+    diagnoses = Diagnose.objects.filter(patient=user)
+
+    context = {
+        'user': user,
+        'diagnoses': diagnoses
+    }
+
+
+
+    return render(request, template, context=context)

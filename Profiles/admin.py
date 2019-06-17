@@ -1,8 +1,6 @@
 from django.contrib import admin
-from .models import Profile
+from .models import Profile, Diagnose
 
+admin.site.register(Profile)
 
-class ProfileAdmin(admin.ModelAdmin):
-    pass
-
-admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Diagnose)

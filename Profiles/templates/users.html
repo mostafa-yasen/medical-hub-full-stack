@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+<!-- Styles -->
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
+
+
+<!-- Content -->
+{% block content %}
+ <!-- Start Page Content -->
+ <div class="content">
+    <div class="container justify-content-center d-flex">
+        <div class="row justify-content-center">
+            <div class="col-10 pt-3">
+                <h1 class="text-center text-fadded">
+                    Search For A User
+                </h1>
+                <input type="id" class="form-control text-center text-upper" placeholder="ex: 295 1023 24 03435">
+            </div>
+
+            {% for user in users %}
+            <div class="col-sm-7 col-md-6 col-lg-3 mt-4">
+                <div class="card box-shadow-animate ml-auto mr-auto mb-3">
+                    <img src="{{ user.profile.pic.url }}" class="card-img-top" style="max-height: 250px" alt="Not Found">
+                    <div class="card-body">
+                        <h5 class="card-title text-info">{{ user.get_full_name }}</h5>
+                        <h6 class="user-city">
+                            <span class="text-danger"><i class="fas fa-map-marker-alt"></i>
+                            </span> {% if user.profile.address %} {{ user.profile.address }} {% else %} No Address Provided {% endif %}
+                        </h6>
+                        <p class="card-text text-fadded-2">ID: {{ user.profile.nid }}</p>
+                        <!-- <p class="card-text"></p> -->
+                        <a href="user-details.html" class="btn btn-danger m-auto d-block">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- End Page Content -->
+{% endblock %}
+
+
+<!-- Scripts -->
+{% block scripts %}
+
+{% endblock %}

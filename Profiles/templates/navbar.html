@@ -11,16 +11,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navLinks">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item {% if 'communities' in request.path %} active {% endif %}">
                         <a class="nav-link" href="/communities/">Communities</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if 'profile' in request.path %} active {% endif %}">
                         <a class="nav-link" href="/profile/">Profile</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if 'users' in request.path %} active {% endif %}">
                         <a class="nav-link" href="/users/">Search for a Patient</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {% if 'logout' in request.path %} active {% endif %}">
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                 </ul>
@@ -38,16 +38,16 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navLinks">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item {% if 'communities' in request.path %} active {% endif %}">
                             <a class="nav-link" href="/communities/">Communities</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {% if 'profile' in request.path %} active {% endif %}">
                             <a class="nav-link" href="/profile/">Profile</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {% if 'doctors' in request.path %} active {% endif %}">
                             <a class="nav-link" href="/doctors/">Doctors</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {% if 'logout' in request.path %} active {% endif %}">
                             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                         </li>
                     </ul>

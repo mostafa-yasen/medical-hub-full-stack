@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/user-details.css' %}">
+{% endblock %}
+
+{% block modals %}
+<div class="modal fade" id="diagnoseModal" tabindex="-1" role="dialog" aria-labelledby="DiagnoseModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New Diagnose</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <label for="">Diagnose Title</label>
+                <textarea name="diagnose-title" class="form-control m-0" id="" cols="30" rows="2"></textarea>
+
+                <label for="" class="mt-3">Diagnose Content</label>
+                <textarea name="diagnose-title" class="form-control m-0" id="" cols="30" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+              <a class="text-danger" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger">Submit Diagnose</button>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-3 pt-5 pb-5 bg-light box-shadow user-info">
+
+                <div class="img-container rounded box-shadow-animate">
+                    <img src="{{ user.profile.pic.url }}" style="max-height: 250px" class="" alt="Not Found">
+                </div>
+
+                <h3 class="user-name text-fadded text-center mt-3 text-capitalize">{{ user.get_full_name }}</h3>
+
+                <div class="card text-center mb-3">
+                    <!-- BIO Card -->
+                    <div class="card-header">BIO</div>
+                    <div class="card-body">
+                        {% if user.profile.bio %}
+                            {{ user.profile.bio }}
+                        {% else %}
+                            No Bio Provided.
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Personal Info Card -->
+                <div class="card text-center">
+                    <div class="card-header bg-info text-center text-white">
+                        Personal Information
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="row m-0">
+                            <div class="border-bottom p-1 col-6 border-right">Address</div>
+                            <div class="border-bottom p-1 col-6">{{ user.profile.address }}</div>
+
+                            <div class="border-bottom p-1 col-6 border-right">Gender</div>
+                            <div class="border-bottom p-1 col-6">
+                                {% if user.profile.gender == 'M' %}
+                                    Male
+                                {% else %}
+                                    Female
+                                {% endif %}
+                            </div>
+
+                            <div class="border-right border-bottom p-1 col-6">Age</div>
+                            <div class="border-bottom col-6 ">23</div>
+
+                            <div class="border-bottom p-1 col-6 border-right">Blood Type</div>
+                            <div class="border-bottom p-1 col-6">O+</div>
+
+                            <div class="border-bottom p-1 col-6 border-right">Height</div>
+                            <div class="border-bottom p-1 col-6">163 cm</div>
+
+                            <div class="border-bottom p-1 col-6 border-right">Weight</div>
+                            <div class="border-bottom p-1 col-6">80 kg</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12 col-md-8 col-lg-9 pt-5 pb-5">
+                <h2 class="text-center text-fadded text-upper">Previous Diagnosis</h2>
+                <button class="btn btn-danger d-block m-auto text-capitalize large-width" data-toggle="modal" data-target="#diagnoseModal">Diagnose {{ user.get_full_name }}</button>
+
+                <!-- Diagnose Cards List -->
+                {% for diagnose in diagnoses %}
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h5 class="m-0">Diagnosed by <span class="text-info text-capitalize">{{ diagnose.doctor.user.get_full_name }}</span>
+                                <span class="text-fadded-1 text-sm"> on  <i class="far fa-clock"></i> {{ diagnose.date }}</span>
+                            </h5>
+                            <hr>
+                            <h5 class="text-fadded">{{ diagnose.title }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text text-fadded-1">
+                                {{ diagnose.content }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
