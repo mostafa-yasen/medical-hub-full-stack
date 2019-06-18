@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/doctor-profile.css' %}">
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 box-shadow text-center pb-5 col-lg-3 bg-white">
+                <div class="doctor-info mt-5">
+                    <div class="image-container box-shadow-animate">
+                        <img src="{{ request.user.profile.pic.url }}" style="width: 100%" alt="not found">
+                    </div>
+                </div>
+                <h3 class="doctor-name text-fadded mb-0 mt-2 text-capitalize">
+                    Dr. {{ request.user.get_full_name }}
+                    <a href="#" class="text-info text-sm ml-1">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </h3>
+                <div class="doctor-rate text-warning text-center">
+                    {% for i in '12345' %}
+                    {% if forloop.counter <= user.profile.rate %}
+                    <i class="fas fa-star"></i>
+                    {% else %}
+                    <i class="far fa-star"></i>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <hr>
+
+                <div class="doctor-address">
+                    {{ user.profile.address }}
+                    <a href="#" class="text-info ml-1">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </div>
+
+                <div class="doctor-phone">
+                    {{ user.profile.phone }}
+                    <a href="#" class="text-info ml-1">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
+                </div>
+
+                <div class="card mt-3 mb-3">
+                    <div class="card-header">
+                        BIO
+                    </div>
+                    <div class="card-body">
+                        {{ user.profile.bio }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-12 col-lg-9 pt-5 pr-0 pl-5">
+                <div class="row bg-light mb-2 mr-0 ml-0">
+                    <div class="col pl-0 pr-0">
+                        <div id="askedQuestionsBtn" class="text-center p-2">
+                            Recently Asked Questions
+                        </div>
+                    </div>
+                    <div class="col pl-0 pr-0">
+                        <div id="answeredQuestionsBtn" class="text-center bg-info text-light p-2">
+                            Answered Questions
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions without answers -->
+                <div id="askedQuestions">
+                    {% for question in questions reversed %}
+                    {% if not question.answer %}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>
+                                <span class="text-sm text-fadded-2">Question By</span>
+                                {% if not question.anonymous %}
+                                <span class="text-info">{{ question.patient.get_full_name }}</span>
+                                {% else %}
+                                <i class="fas fa-user-secret"></i>
+                                {% endif %}
+                                <span class="text-sm text-fadded-2">
+                                    <i class="far fa-clock"></i> {{ question.date }}
+                                </span>
+                            </h5>
+
+                            <p class="text-fadded-1 m-0">{{ question.content }}</p>
+                        </div>
+                        <div class="card-body p-2">
+                            <textarea class="form-control txtContent" rows="3">{{ question.answer }}</textarea>
+                            <button class="btn btn-success d-block ml-auto mt-2 mb-1 answerBtn" data-question_id="{{ question.id }}">
+                                Submit Answer
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                
+                </div>
+
+                <!-- Answered Questions -->
+                <div id="answeredQuestions">
+                    {% for question in questions reversed %}
+                    {% if question.answer %}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            <h5>
+                                <span class="text-fadded-2 text-sm">Question By</span>
+                                <a href="{% url 'user_details' question.patient.id %}" class="text-info">
+                                    {{ question.patient.get_full_name }}
+                                </a>
+                                <span class="text-fadded-2 text-sm">
+                                    <i class="far fa-clock"></i>
+                                    {{ question.date }}
+                                </span>
+                            </h5>
+                            <p class="text-fadded m-0">
+                                {{ question.content }}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <!-- <a class="close text-danger ml-2" aria-label="Close" style="font-size: 1.3em">
+                                <span aria-hidden="">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </a>
+
+                            <a class="close" aria-label="Close" style="font-size: 1.3em">
+                                <span aria-hidden="">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </span>
+                            </a> -->
+
+                            <h5 class="text-info">{{ user.get_full_name }}</h5>
+                            <p class="card-text">
+                                {{ question.answer }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/doctor-profile.js' %}"></script>
+
+<script>
+
+    $(".answerBtn").each(function () {
+        currentBtn = $(this);
+        currentBtn.on('click', function (e) {
+            var question_id = $(this).data('question_id');
+            var txtContent = $(this).siblings('.txtContent').val();
+            
+            $.ajax({
+               method: 'post',
+               url: "/questions/" + question_id + "/answer/",
+               data: {
+                   content: txtContent,
+                   csrfmiddlewaretoken: "{{ csrf_token }}"
+               },
+               success: function (res) {
+                    window.location.reload()
+               }
+            });
+
+        });
+    });
+
+</script>
+
+{% endblock %}

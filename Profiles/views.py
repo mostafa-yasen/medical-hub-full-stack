@@ -90,16 +90,18 @@ def register(request):
 @login_required
 def profile(request):
     user = request.user
-    diagnoses = None
+    context = {}
 
-    if not user.profile.is_doctor:
+    if user.profile.is_doctor:
+        template = 'doctor-profile.html'
+        questions = Question.objects.filter(doctor=user.profile)
+        context['questions'] = questions
+    else:
+        template = 'user-profile.html'
         diagnoses = Diagnose.objects.filter(patient=user)
-    
-    context = {
-        'diagnoses': diagnoses
-    }
+        context['diagnoses'] = diagnoses
 
-    return render(request ,'user-profile.html', context=context)
+    return render(request , template, context=context)
 
 
 @login_required
@@ -187,7 +189,7 @@ def doctor_details(request, doctor_id):
 
     return render(request, template, context)
 
-login_required
+@login_required
 def ask(request, doctor_id):
     doctor = User.objects.get(id=doctor_id)
     patient = request.user
@@ -210,3 +212,13 @@ def ask(request, doctor_id):
     newQuestion.save()
 
     return redirect('/')
+
+
+@login_required
+def answer(request, question_id):
+    question = Question.objects.get(id=question_id)
+    answer = request.POST['content']
+    question.answer = answer
+    question.save()
+
+    return JsonResponse({'error': 'None'})
