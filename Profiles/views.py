@@ -222,3 +222,14 @@ def answer(request, question_id):
     question.save()
 
     return JsonResponse({'error': 'None'})
+
+@login_required
+def asked_questions(request):
+    template = 'asked-questions.html'
+    questions = Question.objects.filter(patient=request.user)
+
+    context = {
+        'questions': questions,
+    }
+
+    return render(request, template, context)

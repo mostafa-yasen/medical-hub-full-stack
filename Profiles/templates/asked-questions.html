@@ -3,8 +3,13 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/user_profile.css' %}">
-<!-- <link rel="stylesheet" href="{% static 'css/profile.css' %}"> -->
 {% endblock %}
+
+
+{% block modals %}
+
+{% endblock %}
+
 
 {% block content %}
 <div class="container profile-content" id="profile-content">
@@ -14,7 +19,8 @@
                 <img src="{{ request.user.profile.pic.url }}" alt="Image Not Found">
             </div>
             <div class="user-info mt-4">
-                <h6 class="text-capitalize text-center m-0 text-fadded text-bold" style="font-size: 1.5em; font-weight: bold">{{ request.user.get_full_name }}</h6>
+                <h6 class="text-capitalize text-center m-0 text-fadded text-bold"
+                    style="font-size: 1.5em; font-weight: bold">{{ request.user.get_full_name }}</h6>
                 <a href="#" class="text-fadded-2 text-center d-block">edit profile</a>
                 <h6 class="user-info-city">
                     {% if request.profile.address %}
@@ -26,7 +32,7 @@
                 </h6>
                 <h6 class="user-info-id">
                     <span class="text-success">
-                            <i class="fas fa-id-card-alt"></i>
+                        <i class="fas fa-id-card-alt"></i>
                     </span>
                     {{ request.user.profile.nid }}
                 </h6>
@@ -39,7 +45,7 @@
             </div>
 
             <a href="{% url 'asked_questions' %}" class="d-block text-center bg-danger rounded p-2">View Questions</a>
-            
+
             <div class="medical-info mb-5">
                 <h3 class="title text-fadded">Medical Info</h3>
                 <ul class="medical-info-items">
@@ -54,32 +60,36 @@
 
         <div class="col-lg-9 col-md-6 col-sm-12 pl-5 pt-5 ">
             <div class="prev-diagnoses">
-                <h3 class="text-center text-upper mb-3">Previos Diagnosis</h3>
+                <h3 class="text-center text-upper mb-3">Asked Questions</h3>
 
-                {% for diagnose in diagnoses %}
-                <div class="diagnose">
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <span class="text-md text-fadded">
-                                Diagnosed by
-                            </span>
-                            <span class="text-capitalize">
-                                <a href="#" class="text-info">
-                                    Dr.{{ diagnose.doctor.user.get_full_name }}
+                <div class="row no-gutters justify-content-center">
+                    {% for question in questions %}
+                    <div class="col-12">
+                        <div class="card mb-2 d-block">
+                            <div class="card-header">
+                                <span class="text-fadded-2 text-md">Asked to</span>
+                                <a href="{% url 'doctor-details' question.doctor.id %}" class="text-info">
+                                    Dr. {{ question.doctor.user.get_full_name }}
                                 </a>
-                            </span>
-                            <span class="text-md text-fadded">on {{ diagnose.date }}</span>
-                            <h5 class="m-0">{{ diagnose.title }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                {{ diagnose.content }}
-                            </p>
+                                <span class="text-fadded-2 text-md">
+                                    <i class="far fa-clock"></i>
+                                    {{ question.date }}
+                                </span>
+
+                                <h5 class="m-0 text-fadded">{{question.content}}</h5>
+                            </div>
+                            <div class="card-body">
+                                {% if question.answer %}
+                                {{ question.answer }}
+                                {% else %}
+                                Not Answered Yet
+                                {% endif %}
+
+                            </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-
             </div>
         </div>
     </div>
@@ -89,5 +99,5 @@
 
 
 {% block scripts %}
-<script src="{% static 'js/index.js' %}"></script>
+
 {% endblock %}

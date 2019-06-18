@@ -13,7 +13,8 @@
 <!-- Modals -->
 {% block modals %}
 
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -122,7 +123,8 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Re-enter Password</span>
                         </div>
-                        <input type="password" name="confirm_password" class="form-control" id="user-new-password-confirm">
+                        <input type="password" name="confirm_password" class="form-control"
+                            id="user-new-password-confirm">
                     </div>
                     <div class="modal-footer">
                         <a class="text-danger" data-dismiss="modal">Close</a>
@@ -136,124 +138,221 @@
 
 {% endblock %}
 
-<!-- Navbar -->
-{% block navbar %}
-
-{% endblock %}
 
 <!-- Content -->
 {% block content %}
 
-    <!-- Start Header -->
-    <div id="header">
-        <div class="overlay">
-            <div class="container">
-                <div class="col col-6 ml-auto">
-                    <h1 class="typed" id="typed">
-                    </h1>
-                </div>
-
-                <a href="#about" class="more">
-                    <i class="fas fa-angle-double-down"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- End Header -->
-
-    <!-- Start About -->
-    <div id="about" class="bg-white">
+<!-- Start Header -->
+<div id="header">
+    <div class="overlay">
         <div class="container">
-            <div class="title">
-                <h5>About Us</h5>
+            <div class="col col-6 ml-auto">
+                <h1 class="typed" id="typed">
+                </h1>
             </div>
 
-            <div class="about-content">
-                <p>
-                    Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
-                    Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
-                    tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
-                    snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
-                    toffee soufflé.
-                </p>
-            </div>
+            <a href="#about" class="more">
+                <i class="fas fa-angle-double-down"></i>
+            </a>
         </div>
     </div>
-    <!-- End About -->
+</div>
+<!-- End Header -->
 
-    <!-- Start WhyChooseUs -->
-    <div id="WhyChooseUs">
+<!-- Start About -->
+<div id="about" class="bg-white">
+    <div class="container">
+        <div class="title">
+            <h5>About Us</h5>
+        </div>
+
+        <div class="about-content">
+            <p>
+                Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
+                Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
+                tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
+                snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
+                toffee soufflé.
+            </p>
+        </div>
+    </div>
+</div>
+<!-- End About -->
+
+<!-- Start WhyChooseUs -->
+<div id="WhyChooseUs">
+    <div class="container">
+        <div class="why-content">
+            <p>
+                Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
+                Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
+                tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
+                snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
+                toffee soufflé.
+            </p>
+        </div>
+        <div class="title">
+            <h5>Why Choose Us ?</h5>
+        </div>
+    </div>
+</div>
+<!-- End WhyChooseUs -->
+
+<!-- Start Developers -->
+<div id="developers">
+    <div class="container-fluid">
+        <div class="title col-md-12">
+            <h3>Meet Our Developers</h3>
+        </div>
+
         <div class="container">
-            <div class="why-content">
-                <p>
-                    Halvah tart bear claw cake dessert cupcake cookie gummies pudding. Lemon drops tart liquorice.
-                    Dessert I love muffin biscuit I love tootsie roll candy canes. Topping gummies caramels jelly
-                    tootsie roll <br><br> I love liquorice croissant chupa chups. Sugar plum candy croissant cake sesame
-                    snaps I love ice cream. Marzipan tootsie roll lollipop cake pastry. Chocolate topping chocolate bar
-                    toffee soufflé.
-                </p>
-            </div>
-            <div class="title">
-                <h5>Why Choose Us ?</h5>
-            </div>
-        </div>
-    </div>
-    <!-- End WhyChooseUs -->
+            <div class="devs-cards row">
 
-    <!-- Start Developers -->
-    <div id="developers">
-        <div class="container-fluid">
-            <div class="title col-md-12">
-                <h3>Meet Our Developers</h3>
-            </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
 
-            <div class="container">
-                <div class="devs-cards row">
-                    <div class="col-md-4 col-sm-12">
-                        <div class="dev-card">
-                            <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+                        <h5 class="dev-name">Ahmed Medhat</h5>
 
-                            <h5 class="dev-name">Mostafa Yasin</h5>
-
-                            <span class="dev-title">Full-Stack Python Developer</span>
-                            <ul class="dev-social-links">
-                                <li class="dev-facebook"><a href="#">
-                                        <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
-                                    </a>
-                                </li>
-                                <li class="dev-twitter"><a href="#">
-                                        <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <span class="dev-title">Android Developer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter"><a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                        <h5 class="dev-name">Mostafa Yasin</h5>
+
+                        <span class="dev-title">Full-Stack Python Developer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter">
+                                <a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                        <h5 class="dev-name">Rehab Mohamed</h5>
+
+                        <span class="dev-title">UI/UX Designer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter"><a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                        <h5 class="dev-name">Waleed Qutb</h5>
+
+                        <span class="dev-title">Android Developer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter"><a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                        <h5 class="dev-name">Fatma Adel</h5>
+
+                        <span class="dev-title">Front-End Developer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter"><a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="dev-card rounded">
+                        <img src="{% static 'images/register.jpg' %}" alt="Not Found">
+
+                        <h5 class="dev-name">Mahmoud Shaaban</h5>
+
+                        <span class="dev-title">Front-End Developer</span>
+                        <ul class="dev-social-links">
+                            <li class="dev-facebook"><a href="#">
+                                    <img src="{% static 'images/facebook.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                            <li class="dev-twitter"><a href="#">
+                                    <img src="{% static 'images/twitter.svg' %}" alt="Not Found" class="social-icon">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-    <!-- End Developers -->
+</div>
+<!-- End Developers -->
 {% endblock %}
 
 <!-- Footer -->
 {% block footer %}
-    <!-- Start Footer -->
-    <footer>
-        <h5>Made With <span class="heart-beating"> <i class="fas fa-heart"></i> </span> under supervision of FCI-Minia
-            University</h5>
-    </footer>
-    <!-- End Footer -->
+<!-- Start Footer -->
+<footer>
+    <h5>Made With <span class="heart-beating"> <i class="fas fa-heart"></i> </span> under supervision of FCI-Minia
+        University</h5>
+</footer>
+<!-- End Footer -->
 {% endblock %}
 
 <!-- Scripts -->
 {% block scripts %}
-    <script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
 
-    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
 
-    <script src="{% static 'lib/font-awesome/js/all.min.js' %}"></script>
+<script src="{% static 'lib/font-awesome/js/all.min.js' %}"></script>
 
-    <script src="{% static 'lib/Typed.js/typed.min.js' %}"></script>
+<script src="{% static 'lib/Typed.js/typed.min.js' %}"></script>
 
-    <script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
